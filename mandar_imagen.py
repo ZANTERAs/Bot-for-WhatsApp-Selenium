@@ -10,7 +10,7 @@ with open("contactos.txt", "r", encoding="utf-8") as f:
     numeros = [line.strip() for line in f.readlines() if line.strip()]
 
 mensaje = "¡Hola! Este es un mensaje automático con imagen 📷"
-ruta_imagen = os.path.abspath("imagen.png")
+ruta_imagen = os.path.abspath("imagen.jpg")
 
 # Inicializar el navegador
 driver = webdriver.Chrome()  # Asegurate de tener chromedriver en el mismo directorio o en el PATH
@@ -59,3 +59,4 @@ for numero in numeros:
 
 print("\n🏁 Proceso finalizado.")
 driver.quit()
+
