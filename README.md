@@ -1,55 +1,99 @@
-# 📲 Bot de WhatsApp con Selenium / WhatsApp Bot with Selenium
 
-Este script automatiza el envío de mensajes de texto e imágenes a múltiples contactos de WhatsApp Web usando **Python** y **Selenium**.
+# 📌 README – WhatsApp Bulk Sender desde Excel  
 
-This script automates sending text messages and images to multiple WhatsApp Web contacts using **Python** and **Selenium**.
+## 🇪🇸 Español  
 
----
+### Descripción  
+Este script permite enviar **mensajes personalizados de WhatsApp** a una lista de contactos guardados en un archivo **Excel**.  
+- La **columna A** contiene los **nombres**.  
+- La **columna B** contiene los **números de teléfono** en formato internacional (ejemplo para Argentina: `54911XXXXXXXX`).  
+- El mensaje se personaliza automáticamente con el nombre de cada persona.  
 
-## 🚀 Características / Features
-
-- 📩 Envío de mensajes de texto / Send text messages
-- 🖼️ Envío de imágenes / Send images
-- 📂 Lectura de contactos desde `contactos.txt` / Read contacts from `contactos.txt`
-- ⏳ Esperas dinámicas para evitar errores / Dynamic waits to prevent errors
-- 🛡️ Manejo básico de errores / Basic error handling
-
----
-
-## 📦 Requisitos / Requirements
-
-- **Python 3.7+**
-- **Google Chrome**
-- **ChromeDriver** (versión compatible con tu Chrome / matching your Chrome version)  
-  👉 [Descargar ChromeDriver / Download ChromeDriver](https://chromedriver.chromium.org/downloads)
-- Paquetes Python / Python packages:
+### Requisitos  
+- Python 3.9 o superior  
+- Google Chrome instalado  
+- Librerías:  
   ```bash
-  pip install selenium
+  pip install -r requirements_mensajes_excel.txt
+  ```  
 
-📁 Estructura del Proyecto / Project Structure
+### Configuración  
+En el archivo `mandar_mensajes_excel.py`, editar:  
+```python
+EXCEL_PATH   = r"C:\ruta\a\contactos.xlsx"   # ruta a tu archivo
+SHEET_NAME   = 0                                # nombre o índice de hoja
+NAME_COL     = "A"                              # columna con nombres
+PHONE_COL    = "B"                              # columna con teléfonos
+MENSAJE_BASE = "¡Hola {nombre}! Te escribimos de *La Tregua*. ¿Cómo estás?"
+```
 
-📂 proyecto / project
- ├── enviar_whatsapp.py     # Script principal / Main script
- ├── contactos.txt          # Lista de contactos / Contact list
- ├── imagen.jpg             # Imagen a enviar / Image to send
- └── chromedriver.exe       # Driver de Chrome / Chrome driver
+⚙️ Opciones extra:  
+- Guardar sesión de Chrome (no volver a escanear QR):  
+  ```python
+  USER_DATA_DIR = r"C:\Users\TUUSUARIO\AppData\Local\Google\Chrome\User Data"
+  PROFILE_DIR   = "Default"
+  ```  
 
-📝 Formato de contactos.txt / contactos.txt Format
+### Uso  
+1. Ejecutar el script:  
+   ```bash
+   python mandar_mensajes_excel.py
+   ```  
+2. Se abrirá WhatsApp Web.  
+3. Escanear el código QR (si no está la sesión guardada).  
+4. Presionar **ENTER** en la consola.  
+5. El programa enviará los mensajes uno por uno.  
 
-Cada número debe estar en formato internacional sin el símbolo +.
-Each number must be in international format without the + symbol.
+### Salidas  
+- `contactos_leidos_desde_excel.csv` → vista previa de los contactos leídos.  
+- `resultado_envios_desde_excel.csv` → log con estado de cada envío (ENVIADO/ERROR).  
 
-Ejemplo / Example:
 
-5491123456789
-5491167890123
+---
 
-⚠️ Advertencias / Warnings
-❌ No uses este script para spam masivo o WhatsApp puede bloquear tu cuenta.
-❌ Do not use this script for mass spam or WhatsApp may block your account.
+## 🇬🇧 English  
 
-📶 Requiere conexión estable a internet.
-📶 Requires a stable internet connection.
+### Description  
+This script allows you to send **personalized WhatsApp messages** to a list of contacts stored in an **Excel file**.  
+- **Column A** contains the **names**.  
+- **Column B** contains the **phone numbers** in international format (for Argentina: `54911XXXXXXXX`).  
+- The message is automatically customized with each contact’s name.  
 
-🛠 Los selectores de elementos pueden cambiar si WhatsApp Web actualiza su interfaz.
-🛠 Element selectors may change if WhatsApp Web updates its interface.
+### Requirements  
+- Python 3.9 or higher  
+- Google Chrome installed  
+- Libraries:  
+  ```bash
+  pip install -r requirements_mensajes_excel.txt
+  ```  
+
+### Configuration  
+In the `mandar_mensajes_excel.py` file, edit:  
+```python
+EXCEL_PATH   = r"C:\path\to\contacts.xlsx"   # path to your Excel file
+SHEET_NAME   = 0                                # sheet name or index
+NAME_COL     = "A"                              # column with names
+PHONE_COL    = "B"                              # column with phone numbers
+MENSAJE_BASE = "Hello {nombre}! This is a message from *La Tregua*. How are you?"
+```
+
+⚙️ Extra options:  
+- Keep Chrome session (no need to scan QR every time):  
+  ```python
+  USER_DATA_DIR = r"C:\Users\YOURUSER\AppData\Local\Google\Chrome\User Data"
+  PROFILE_DIR   = "Default"
+  ```  
+
+### Usage  
+1. Run the script:  
+   ```bash
+   python mandar_mensajes_excel.py
+   ```  
+2. WhatsApp Web will open.  
+3. Scan the QR code (if not already logged in).  
+4. Press **ENTER** in the console.  
+5. The program will send the messages one by one.  
+
+### Outputs  
+- `contactos_leidos_desde_excel.csv` → preview of contacts read.  
+- `resultado_envios_desde_excel.csv` → log with status of each send (SENT/ERROR).  
