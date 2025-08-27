@@ -1,99 +1,106 @@
 
-# 📌 README – WhatsApp Bulk Sender desde Excel  
+# 📌 README – WhatsApp Bulk Sender desde Excel con Configuración Externa  
 
 ## 🇪🇸 Español  
 
 ### Descripción  
-Este script permite enviar **mensajes personalizados de WhatsApp** a una lista de contactos guardados en un archivo **Excel**.  
-- La **columna A** contiene los **nombres**.  
-- La **columna B** contiene los **números de teléfono** en formato internacional (ejemplo para Argentina: `54911XXXXXXXX`).  
-- El mensaje se personaliza automáticamente con el nombre de cada persona.  
+Este script permite enviar **mensajes personalizados o masivos de WhatsApp** a una lista de contactos guardados en un archivo **Excel**.  
+La configuración (ruta del Excel, columnas, texto del mensaje, etc.) se guarda en un archivo externo `config.json`, lo que hace más fácil modificarla sin tocar el código.  
 
 ### Requisitos  
 - Python 3.9 o superior  
 - Google Chrome instalado  
-- Librerías:  
+- Librerías necesarias:  
   ```bash
-  pip install -r requirements_mensajes_excel.txt
+  pip install selenium pandas openpyxl
   ```  
 
-### Configuración  
-En el archivo `mandar_mensajes_excel.py`, editar:  
-```python
-EXCEL_PATH   = r"C:\ruta\a\contactos.xlsx"   # ruta a tu archivo
-SHEET_NAME   = 0                                # nombre o índice de hoja
-NAME_COL     = "A"                              # columna con nombres
-PHONE_COL    = "B"                              # columna con teléfonos
-MENSAJE_BASE = "¡Hola {nombre}! Te escribimos de *La Tregua*. ¿Cómo estás?"
+### Archivos principales  
+- `mandar_mensajes_excel.py` → Script principal en Python.  
+- `config.json` → Archivo de configuración editable por el usuario.  
+
+### Configuración (`config.json`)  
+Ejemplo de archivo:  
+```json
+{
+  "EXCEL_PATH": "C:/Users/santi/La Tregua/Hoja de cálculo sin título.xlsx",
+  "SHEET_NAME": 0,
+  "NAME_COL": "A",
+  "PHONE_COL": "B",
+  "MENSAJE_BASE": "Hola soy Adrián de La Tregua - Balneario Marisol…\nTe quería informar el costo de la Temporada 2026.\nLa misma será desarrollada del 11 al 31/01\nAlojamiento con Pensión Completa\nMonto por persona por día Mayor 3 años $ 45.000.-\nDescuentos: Socio Adherente 10% / Flia más 5 personas 5%\nDatos de CONTACTO:\nCarina 1169570313\nFacebook LaTregua.org.ar / Instagram latregua.ofical"
+}
 ```
 
-⚙️ Opciones extra:  
-- Guardar sesión de Chrome (no volver a escanear QR):  
-  ```python
-  USER_DATA_DIR = r"C:\Users\TUUSUARIO\AppData\Local\Google\Chrome\User Data"
-  PROFILE_DIR   = "Default"
-  ```  
+- `EXCEL_PATH` → Ruta del archivo Excel con contactos.  
+- `SHEET_NAME` → Nombre o índice de la hoja (0 = primera hoja).  
+- `NAME_COL` → Columna con nombres (ej. `"A"`).  
+- `PHONE_COL` → Columna con teléfonos (ej. `"B"`) en formato internacional E.164 (`54911XXXXXXXX`).  
+- `MENSAJE_BASE` → Texto del mensaje a enviar (puede incluir saltos de línea con `\n`).  
 
 ### Uso  
-1. Ejecutar el script:  
+1. Editar el archivo `config.json` con tu ruta de Excel y mensaje deseado.  
+2. Ejecutar el script:  
    ```bash
    python mandar_mensajes_excel.py
    ```  
-2. Se abrirá WhatsApp Web.  
-3. Escanear el código QR (si no está la sesión guardada).  
-4. Presionar **ENTER** en la consola.  
-5. El programa enviará los mensajes uno por uno.  
+3. Se abrirá WhatsApp Web en Chrome.  
+4. Escanear el código QR (si no está guardada la sesión).  
+5. Presionar **ENTER** en la consola.  
+6. El programa enviará el mensaje a todos los contactos listados.  
 
-### Salidas  
+### Resultados  
 - `contactos_leidos_desde_excel.csv` → vista previa de los contactos leídos.  
 - `resultado_envios_desde_excel.csv` → log con estado de cada envío (ENVIADO/ERROR).  
-
 
 ---
 
 ## 🇬🇧 English  
 
 ### Description  
-This script allows you to send **personalized WhatsApp messages** to a list of contacts stored in an **Excel file**.  
-- **Column A** contains the **names**.  
-- **Column B** contains the **phone numbers** in international format (for Argentina: `54911XXXXXXXX`).  
-- The message is automatically customized with each contact’s name.  
+This script allows you to send **personalized or bulk WhatsApp messages** to a list of contacts stored in an **Excel file**.  
+The configuration (Excel path, sheet, columns, message text, etc.) is stored in an external file `config.json`, so you can change it without modifying the code.  
 
 ### Requirements  
 - Python 3.9 or higher  
 - Google Chrome installed  
-- Libraries:  
+- Required libraries:  
   ```bash
-  pip install -r requirements_mensajes_excel.txt
+  pip install selenium pandas openpyxl
   ```  
 
-### Configuration  
-In the `mandar_mensajes_excel.py` file, edit:  
-```python
-EXCEL_PATH   = r"C:\path\to\contacts.xlsx"   # path to your Excel file
-SHEET_NAME   = 0                                # sheet name or index
-NAME_COL     = "A"                              # column with names
-PHONE_COL    = "B"                              # column with phone numbers
-MENSAJE_BASE = "Hello {nombre}! This is a message from *La Tregua*. How are you?"
+### Main files  
+- `mandar_mensajes_excel.py` → Main Python script.  
+- `config.json` → User-editable configuration file.  
+
+### Configuration (`config.json`)  
+Example:  
+```json
+{
+  "EXCEL_PATH": "C:/Users/santi/La Tregua/Hoja de cálculo sin título.xlsx",
+  "SHEET_NAME": 0,
+  "NAME_COL": "A",
+  "PHONE_COL": "B",
+  "MENSAJE_BASE": "Hello, I’m Adrián from La Tregua - Balneario Marisol…\nI wanted to inform you about the cost of the 2026 Season.\nIt will take place from Jan 11 to Jan 31\nAccommodation with Full Board\nPrice per person per day (3+ years): $45,000\nDiscounts: 10% for Members / 5% for families of 5+\nContact:\nCarina 1169570313\nFacebook LaTregua.org.ar / Instagram latregua.ofical"
+}
 ```
 
-⚙️ Extra options:  
-- Keep Chrome session (no need to scan QR every time):  
-  ```python
-  USER_DATA_DIR = r"C:\Users\YOURUSER\AppData\Local\Google\Chrome\User Data"
-  PROFILE_DIR   = "Default"
-  ```  
+- `EXCEL_PATH` → Path to the Excel file with contacts.  
+- `SHEET_NAME` → Sheet name or index (0 = first).  
+- `NAME_COL` → Column with names (e.g. `"A"`).  
+- `PHONE_COL` → Column with phone numbers (international E.164 format: `54911XXXXXXXX`).  
+- `MENSAJE_BASE` → Message text (may include line breaks with `\n`).  
 
 ### Usage  
-1. Run the script:  
+1. Edit `config.json` with your Excel path and desired message.  
+2. Run the script:  
    ```bash
    python mandar_mensajes_excel.py
    ```  
-2. WhatsApp Web will open.  
-3. Scan the QR code (if not already logged in).  
-4. Press **ENTER** in the console.  
-5. The program will send the messages one by one.  
+3. WhatsApp Web will open in Chrome.  
+4. Scan the QR code (if not already logged in).  
+5. Press **ENTER** in the console.  
+6. The program will send the message to all listed contacts.  
 
 ### Outputs  
 - `contactos_leidos_desde_excel.csv` → preview of contacts read.  
-- `resultado_envios_desde_excel.csv` → log with status of each send (SENT/ERROR).  
+- `resultado_envios_desde_excel.csv` → log with each send status (SENT/ERROR).  
